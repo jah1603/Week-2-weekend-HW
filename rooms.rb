@@ -19,22 +19,40 @@ attr_reader(:name, :guests, :songs, :capacity, :entry_fee)
   end
 
   def free_space()
-    return @capacity - @guests.length()
+    if @capacity - @guests.length() > 0
+      return @capacity - @guests.length()
+    else
+      return "This room is full."
+    end
   end
 
   def sufficient_funds(guest)
     return true if guest.money >= @entry_fee
   end
 
-  def check_in(guest)
-    return @guests.push(guest) if free_space > 0 && sufficient_funds = true
-  else return "Unable to complete check-in process. This is either because the room is full or because you do not have enough money to pay the entry fee."
-  end
-
   def money_down(guest)
-  return guest.money - @entry_fee
+    if guest.money >= @entry_fee
+      return guest.money - @entry_fee
+    else
+      return "Insufficient funds to pay entry fee."
+    end
   end
 
+  def in_room(guest)
+    if @guests.include?(guest) == false
+      return
+    else
+      return "This guest is in the room already."
+    end
+  end
+
+  def check_in(guest)
+    return money_down(guest) if guest.money < @entry_fee
+    return free_space if @capacity - @guests.length() == 0
+    return in_room(guest) if @guests.include?(guest) == true
+    else
+    return @guests.push(guest), money_down(guest)
+  end
 
   def check_out(number_of_guests)
     @guests.drop(number_of_guests)
