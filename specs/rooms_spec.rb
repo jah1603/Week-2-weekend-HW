@@ -8,9 +8,9 @@ class RoomTest < MiniTest::Test
 
   def setup
 
-    @guest1 = Guest.new("James", 150)
-    @guest2 = Guest.new("Neil", 35)
-    @guest3 = Guest.new("Stella", 120)
+    @guest1 = Guest.new("James", 150, "Sunshine on Leith")
+    @guest2 = Guest.new("Neil", 35, "Master of Puppets")
+    @guest3 = Guest.new("Stella", 120, "Desolation Row")
     @room1 = Room.new("1", [], [@song1], 3, 25)
     @room2 = Room.new("2", [@guest3], [@song3], 2, 140)
     @song1 = Song.new("Sunshine on Leith")
@@ -41,6 +41,10 @@ class RoomTest < MiniTest::Test
 
   def test_in_room__guest
     assert_equal("This guest is in the room already.", @room2.in_room(@guest3))
+  end
+
+  def test_favourite_song
+    assert_equal("Wooo!", @room1.favourite_song(@guest1))
   end
 
   def test_check_in__space

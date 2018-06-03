@@ -46,6 +46,10 @@ attr_reader(:name, :guests, :songs, :capacity, :entry_fee)
     end
   end
 
+  def favourite_song(guest)
+    return "Wooo!" if @songs.include?(guest.favourite_song) == true
+  end
+
   def check_in(guest)
     return money_down(guest) if guest.money < @entry_fee
     return free_space if @capacity - @guests.length() == 0
